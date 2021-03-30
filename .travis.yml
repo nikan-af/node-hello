@@ -1,0 +1,21 @@
+language: node_js
+node_js: node
+sudo: required
+services:
+  - docker
+
+script:
+  - docker build -t nikanaf1/node-app .
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "node-app"
+  env: "Nodeapp-env"
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
+  bucket-name: "elasticbeanstalk-ap-south-1-980064312340"
+  path: "node-app"
+  on:
+    branch: master
+  skip_cleanup: true
